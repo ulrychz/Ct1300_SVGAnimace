@@ -1,0 +1,28 @@
+﻿@page "/svgAnimace"
+
+<PageTitle>Animace SVG</PageTitle>
+<div>
+    <button class="btn btn-primary" @onclick="PridejObrazec">Přidat obrazec</button>
+    <button class="btn btn-warning">Odebrat poslední obrazec</button>
+</div>
+
+<svg class="my-3" width="@SvgWidth" height="@SvgHeight" xmlns="http://www.w3.org/2000/svg" style="border:black solid">
+    @foreach (var item in SvgObrazceList)
+    {
+        switch (item.TypObrazce)
+        {
+            case Models.TypObrazce.ctverec:
+                Models.Ctverec ctverec = (Models.Ctverec)item;
+                <rect width="@ctverec.StranaA" height="@ctverec.StranaA" x="@ctverec.PozX" y="@ctverec.PozY" 
+                style="fill:rgb(@ctverec.Barva.R,@ctverec.Barva.G,@ctverec.Barva.B);stroke-width:3;stroke:black" />
+                break;
+            default:
+                break;
+        }
+    }
+   
+</svg>
+
+@code {
+
+}
