@@ -1,11 +1,19 @@
 ﻿@page "/svgAnimace"
+@inject Blazored.LocalStorage.ILocalStorageService localStorage
 
 <PageTitle>Animace SVG</PageTitle>
 <div>
     <button class="btn btn-primary" @onclick="PridejObrazec">Přidat obrazec</button>
-    <button class="btn btn-warning">Odebrat poslední obrazec</button>
-</div>
+    <button class="btn btn-warning" @onclick=OdebratObrazec>Odebrat poslední obrazec</button>
 
+    <button class="btn btn-primary" @onclick="PosunSpustit">Spustit posun</button>
+    <button class="btn btn-primary" @onclick="PridejObrazec">Zastavit posun</button>
+</div>
+<div>
+    <button class="btn btn-success" @onclick="Ulozit">Uložit</button>
+    <button class="btn btn-info" @onclick="NacistJson">Načíst</button>
+    <button class="btn btn-danger" @onclick="Smazat">Smazat</button>
+</div>
 <svg class="my-3" width="@SvgWidth" height="@SvgHeight" xmlns="http://www.w3.org/2000/svg" style="border:black solid">
     @foreach (var item in SvgObrazceList)
     {
@@ -15,6 +23,17 @@
                 Models.Ctverec ctverec = (Models.Ctverec)item;
                 <rect width="@ctverec.StranaA" height="@ctverec.StranaA" x="@ctverec.PozX" y="@ctverec.PozY" 
                 style="fill:rgb(@ctverec.Barva.R,@ctverec.Barva.G,@ctverec.Barva.B);stroke-width:3;stroke:black" />
+                break;
+            case Models.TypObrazce.obdelnik:
+                Models.Obdelnik obdelnik = (Models.Obdelnik)item;
+                <rect width="@obdelnik.StranaA" height="@obdelnik.StranaB" x="@obdelnik.PozX" y="@obdelnik.PozY"
+                      style="fill:rgb(@obdelnik.Barva.R,@obdelnik.Barva.G,@obdelnik.Barva.B);stroke-width:3;stroke:black" />
+                break;
+
+            case Models.TypObrazce.kruh:
+                Models.Kruh kruh = (Models.Kruh)item;
+                <circle r="@kruh.Polomer" cx="@kruh.PozX" cy="@kruh.PozY" 
+                    fill="rgb(@kruh.Barva.R,@kruh.Barva.G,@kruh.Barva.B)" stroke="black" stroke-width="3" />
                 break;
             default:
                 break;
